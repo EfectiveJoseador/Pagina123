@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Vito-Bodi - Inicio</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../css/vitobadixx.css">
+</head>
+<body>
+    <header class="cabecera">
+        <h1><img src="../img/logo.png" alt="Vito-Bodi" class="logo-header"></h1>
+        <nav class="menu">
+            <a href="login.html">Entrar</a>
+        </nav>
+    </header>
+
+    <main class="contenedor">
+        <section class="tarjeta">
+            <h2>Buscar habitación</h2>
+            <form id="formBuscarPublico" class="formulario">
+                <div class="grupo">
+                    <label for="selCiudadPublico">Ciudad</label>
+                    <select id="selCiudadPublico">
+                        <option value="">Selecciona</option>
+                        <option value="Vitoria">Vitoria</option>
+                        <option value="Bilbao">Bilbao</option>
+                        <option value="Donostia">Donostia</option>
+                    </select>
+                </div>
+                <div class="grupo">
+                    <label for="fechaPublico">Fecha a partir de</label>
+                    <input type="date" id="fechaPublico">
+                </div>
+                <button type="submit">Buscar</button>
+            </form>
+        </section>
+
+        <section class="tarjeta">
+            <h2>Resultados</h2>
+            <div id="listaResultadosPublico" class="lista"></div>
+        </section>
+
+        <section class="tarjeta" id="detalleHabitacion" style="display:none">
+            <h2>Detalle de la habitación</h2>
+            <div class="detalle-hab">
+                <div class="detalle-hab-foto">
+                    <img id="detFotoHab" alt="Foto habitación">
+                </div>
+                <div class="detalle-hab-info">
+                    <p id="detDireccion"></p>
+                    <p id="detCiudad"></p>
+                    <p id="detTamano"></p>
+                    <p id="detPrecio"></p>
+                    <div class="detalle-propietario">
+                        <img id="detFotoProp" alt="Foto propietario">
+                        <div>
+                            <div id="detNombreProp"></div>
+                            <div id="detEmailProp"></div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </section>
+
+    </main>
+
+    <script src="../js/bdIndexedDB.js"></script>
+    <script src="../js/busquedas.js"></script>
+</body>
+</html>

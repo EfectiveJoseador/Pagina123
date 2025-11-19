@@ -1,0 +1,192 @@
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f2f2f2;
+}
+
+.cabecera {
+    background-color: #222;
+    color: #fff;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.cabecera h1 {
+    font-size: 22px;
+    margin: 0;
+}
+
+.menu a {
+    color: #fff;
+    text-decoration: none;
+    margin-left: 15px;
+    font-size: 14px;
+}
+
+.menu a:hover {
+    text-decoration: underline;
+}
+
+.contenedor {
+    max-width: 1000px;
+    margin: 20px auto;
+    padding: 0 10px;
+}
+
+.tarjeta {
+    background-color: #fff;
+    border-radius: 6px;
+    padding: 15px;
+    margin-bottom: 20px;
+    box-shadow: 0 0 4px rgba(0,0,0,0.12);
+}
+
+.tarjeta h2 {
+    margin-top: 0;
+    font-size: 18px;
+}
+
+.tarjeta h3 {
+    font-size: 15px;
+    margin-top: 15px;
+}
+
+.formulario {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 20px;
+    margin-bottom: 10px;
+}
+
+.grupo {
+    display: flex;
+    flex-direction: column;
+    min-width: 180px;
+}
+
+.grupo label {
+    font-size: 13px;
+    margin-bottom: 3px;
+}
+
+.grupo input,
+.grupo select {
+    padding: 6px;
+    border-radius: 3px;
+    border: 1px solid #ccc;
+    font-size: 13px;
+}
+
+button {
+    padding: 7px 14px;
+    border-radius: 4px;
+    border: none;
+    background-color: #0078d7;
+    color: #fff;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #005ea6;
+}
+
+.lista {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 8px;
+    min-height: 40px;
+    font-size: 13px;
+}
+
+.itemHabitacion,
+.itemAlquiler,
+.itemSolicitud {
+    padding: 5px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.itemHabitacion:last-child,
+.itemAlquiler:last-child,
+.itemSolicitud:last-child {
+    border-bottom: none;
+}
+
+.itemHabitacion img {
+    border-radius: 3px;
+    object-fit: cover;
+}
+
+.mensaje-error {
+    color: #c00;
+    font-size: 13px;
+    margin-bottom: 8px;
+}
+
+.zona-drag {
+    border: 2px dashed #999;
+    border-radius: 4px;
+    padding: 10px;
+    text-align: center;
+    font-size: 13px;
+    margin-bottom: 8px;
+}
+
+.preview img {
+    max-width: 120px;
+    max-height: 90px;
+    display: block;
+}
+
+.bloque-dos {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.subtarjeta {
+    flex: 1 1 240px;
+}
+.logo-header {
+    height: 45px;
+    width: auto;
+    vertical-align: middle;
+}
+.detalle-hab {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.detalle-hab-foto img {
+    max-width: 260px;
+    max-height: 200px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.detalle-hab-info p {
+    margin: 4px 0;
+    font-size: 14px;
+}
+
+.detalle-propietario {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.detalle-propietario img {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+

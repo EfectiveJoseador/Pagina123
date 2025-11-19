@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>VitoBadi10 - Panel</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../css/vitobadixx.css">
+</head>
+<body>
+    <header class="cabecera">
+        <h1><img src="../img/logo.png" alt="Vito-Bodi" class="logo-header"></h1>
+        <nav class="menu">
+            <a href="index.html">Inicio</a>
+            <a href="login.html">Salir</a>
+        </nav>
+    </header>
+
+    <main class="contenedor">
+
+        <section class="tarjeta">
+            <h2>Búsqueda de habitaciones</h2>
+
+            <h3>Búsqueda general</h3>
+            <form id="formBuscarPrivado" class="formulario">
+                <div class="grupo">
+                    <label for="selCiudadPrivado">Ciudad</label>
+                    <select id="selCiudadPrivado">
+                        <option value="">Selecciona</option>
+                        <option value="Vitoria">Vitoria</option>
+                        <option value="Bilbao">Bilbao</option>
+                        <option value="Donostia">Donostia</option>
+                    </select>
+                </div>
+                <div class="grupo">
+                    <label for="fechaPrivado">Fecha a partir de</label>
+                    <input type="date" id="fechaPrivado">
+                </div>
+                <button type="submit">Buscar</button>
+            </form>
+
+            <div id="listaResultadosPrivado" class="lista"></div>
+
+            <h3>Búsqueda por geolocalización</h3>
+            <form class="formulario">
+                <div class="grupo">
+                    <label for="latCentro">Latitud</label>
+                    <input type="text" id="latCentro">
+                </div>
+                <div class="grupo">
+                    <label for="lonCentro">Longitud</label>
+                    <input type="text" id="lonCentro">
+                </div>
+                <div class="grupo">
+                    <label for="radioGeo">Radio (km)</label>
+                    <select id="radioGeo">
+                        <option value="0.5">0.5</option>
+                        <option value="1">1</option>
+                        <option value="1.5">1.5</option>
+                        <option value="2">2</option>
+                    </select>
+                </div>
+                <button type="button" id="btnGeo">Buscar por mapa</button>
+            </form>
+
+            <div id="listaResultadosGeo" class="lista"></div>
+        </section>
+
+        <section class="tarjeta">
+            <h2>Mis habitaciones</h2>
+            <h3>Añadir habitación</h3>
+            <form id="formHabitacion" class="formulario">
+                <div class="grupo">
+                    <label for="dirHabitacion">Dirección</label>
+                    <input type="text" id="dirHabitacion">
+                </div>
+                <div class="grupo">
+                    <label for="ciudadHabitacion">Ciudad</label>
+                    <select id="ciudadHabitacion">
+                        <option value="">Selecciona</option>
+                        <option value="Vitoria">Vitoria</option>
+                        <option value="Bilbao">Bilbao</option>
+                        <option value="Donostia">Donostia</option>
+                    </select>
+                </div>
+                <div class="grupo">
+                    <label for="precioHabitacion">Precio</label>
+                    <input type="number" id="precioHabitacion">
+                </div>
+                <div class="grupo">
+                    <label for="tamanoHabitacion">Tamaño (m²)</label>
+                    <input type="number" id="tamanoHabitacion">
+                </div>
+
+                <div class="grupo">
+                    <label for="latHabitacion">Latitud</label>
+                    <input type="text" id="latHabitacion">
+                </div>
+                <div class="grupo">
+                    <label for="lonHabitacion">Longitud</label>
+                    <input type="text" id="lonHabitacion">
+                </div>
+                <div class="grupo">
+                    <label for="fotoHabitacion">Foto</label>
+                    <input type="file" id="fotoHabitacion" accept="image/*">
+                </div>
+                <div id="zonaDrag" class="zona-drag">
+                    Arrastra aquí la imagen
+                </div>
+                <div class="preview">
+                    <img id="imgPreviewHabitacion" alt="Previsualización">
+                </div>
+                <button type="submit">Guardar habitación</button>
+            </form>
+
+            <h3>Ver mis habitaciones</h3>
+            <div id="listaMisHabitaciones" class="lista"></div>
+            <input type="file" id="inputCambiarFoto" accept="image/*" style="display:none">
+        </section>
+
+        <section class="tarjeta">
+            <h2>Mis alquileres y solicitudes</h2>
+
+            <div class="bloque-dos">
+                <div class="subtarjeta">
+                    <h3>Como inquilino</h3>
+                    <button id="btnVerAlquileresInquilino">Ver mis alquileres</button>
+                    <div id="listaAlquileresInquilino" class="lista"></div>
+
+                    <button id="btnVerSolicitudesInquilino">Ver mis solicitudes</button>
+                    <div id="listaSolicitudesInquilino" class="lista"></div>
+                </div>
+
+                <div class="subtarjeta">
+                    <h3>Como propietario</h3>
+                    <button id="btnVerAlquileresPropietario">Ver alquileres de mis habitaciones</button>
+                    <div id="listaAlquileresPropietario" class="lista"></div>
+
+                    <button id="btnVerSolicitudesPropietario">Ver solicitudes de mis habitaciones</button>
+                    <div id="listaSolicitudesPropietario" class="lista"></div>
+                </div>
+            </div>
+        </section>
+        <section class="tarjeta" id="detalleHabitacion" style="display:none">
+            <h2>Detalle de la habitación</h2>
+            <div class="detalle-hab">
+                <div class="detalle-hab-foto">
+                    <img id="detFotoHab" alt="Foto habitación">
+                </div>
+                <div class="detalle-hab-info">
+                    <p id="detDireccion"></p>
+                    <p id="detCiudad"></p>
+                    <p id="detTamano"></p>
+                    <p id="detPrecio"></p>
+                    <div class="detalle-propietario">
+                        <img id="detFotoProp" alt="Foto propietario">
+                        <div>
+                            <div id="detNombreProp"></div>
+                            <div id="detEmailProp"></div>
+                        </div>
+                    </div>
+                    <button id="btnEditarHabitacion" style="margin-top:10px; display:none">
+                        Editar habitación
+                    </button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="../js/bdIndexedDB.js"></script>
+    <script src="../js/busquedas.js"></script>
+    <script src="../js/habitaciones.js"></script>
+    <script src="../js/alquileres.js"></script>
+</body>
+</html>
