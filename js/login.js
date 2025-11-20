@@ -9,15 +9,9 @@ function iniciarLogin() {
     msgErrorLogin = document.getElementById("msgError");
     botonLogin = document.getElementById("btnLogin");
 
-    if (campoEmailLogin) {
-        campoEmailLogin.addEventListener("input", validarLogin);
-    }
-    if (campoPassLogin) {
-        campoPassLogin.addEventListener("input", validarLogin);
-    }
-    if (botonLogin) {
-        botonLogin.addEventListener("click", procesarLogin);
-    }
+    if (campoEmailLogin) campoEmailLogin.addEventListener("input", validarLogin);
+    if (campoPassLogin) campoPassLogin.addEventListener("input", validarLogin);
+    if (botonLogin) botonLogin.addEventListener("click", procesarLogin);
 }
 
 function validarLogin() {
@@ -45,15 +39,16 @@ function procesarLogin(e) {
         if (!usuario) {
             msgErrorLogin.textContent = "Usuario o contraseña incorrectos";
         } else {
-            var perfil = "inquilino";
-            var datos = {
-                email: usuario.email,
-                nombre: usuario.nombre,
-                foto: usuario.foto,
-                perfil: perfil
-            };
-            sessionStorage.setItem("usuarioActual", JSON.stringify(datos));
-            window.location.href = "principal.html";
+            obtenerPerfilUsuario(email, function (perfil) {
+                var datos = {
+                    email: usuario.email,
+                    nombre: usuario.nombre,
+                    foto: usuario.foto,
+                    perfil: perfil
+                };
+                sessionStorage.setItem("usuarioActual", JSON.stringify(datos));
+                window.location.href = "principal.html";
+            });
         }
     });
 }

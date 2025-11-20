@@ -4,15 +4,18 @@
     <meta charset="UTF-8">
     <title>VitoBadi10 - Panel</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="../css/vitobadixx.css">
+    <link rel="stylesheet" href="../css/estilo.css">
 </head>
 <body>
     <header class="cabecera">
-        <h1><img src="../img/logo.png" alt="Vito-Bodi" class="logo-header"></h1>
-        <nav class="menu">
-            <a href="index.html">Inicio</a>
-            <a href="login.html">Salir</a>
-        </nav>
+        <h1><img src="../img/logo.webp" alt="Vito-Bodi" class="logo-header"></h1>
+        <div class="zona-usuario-menu">
+            <div id="usuarioCabecera" class="usuario-cabecera"></div>
+            <nav class="menu">
+                <a href="index.html">Inicio</a>
+                <a href="#" id="btnLogout">Salir</a>
+            </nav>
+        </div>
     </header>
 
     <main class="contenedor">
@@ -140,6 +143,7 @@
                 </div>
             </div>
         </section>
+
         <section class="tarjeta" id="detalleHabitacion" style="display:none">
             <h2>Detalle de la habitación</h2>
             <div class="detalle-hab">
@@ -165,11 +169,30 @@
             </div>
         </section>
 
+        <section class="tarjeta">
+            <h2>Mi perfil</h2>
+            <form id="formPerfilUsuario" class="formulario">
+                <div class="grupo">
+                    <label for="nombreUsuario">Nombre</label>
+                    <input type="text" id="nombreUsuario">
+                </div>
+                <div class="grupo">
+                    <label for="fotoUsuario">Foto de perfil</label>
+                    <input type="file" id="fotoUsuario" accept="image/*">
+                </div>
+                <div class="preview">
+                    <img id="imgPreviewUsuario" alt="Previsualización perfil">
+                </div>
+                <button type="submit" id="btnGuardarPerfil">Guardar perfil</button>
+            </form>
+        </section>
+
     </main>
 
     <script src="../js/bdIndexedDB.js"></script>
     <script src="../js/busquedas.js"></script>
     <script src="../js/habitaciones.js"></script>
     <script src="../js/alquileres.js"></script>
+    <script src="../js/cabeceraUsuario.js"></script>
 </body>
 </html>

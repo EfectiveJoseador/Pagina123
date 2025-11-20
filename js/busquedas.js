@@ -33,23 +33,17 @@ function iniciarBusquedas() {
     btnGeo = document.getElementById("btnGeo");
     listaGeo = document.getElementById("listaResultadosGeo");
 
-    if (formBuscarPublico) {
-        formBuscarPublico.addEventListener("submit", buscarPublico);
-    }
-    if (formBuscarPrivado) {
-        formBuscarPrivado.addEventListener("submit", buscarPrivado);
-    }
-    if (btnGeo) {
-        btnGeo.addEventListener("click", buscarGeo);
-    }
+    if (formBuscarPublico) formBuscarPublico.addEventListener("submit", buscarPublico);
+    if (formBuscarPrivado) formBuscarPrivado.addEventListener("submit", buscarPrivado);
+    if (btnGeo) btnGeo.addEventListener("click", buscarGeo);
 }
 
 function buscarPublico(e) {
     e.preventDefault();
     if (!ciudadPublico || !listaPublico) return;
+
     var ciudad = ciudadPublico.value;
     var fecha = fechaPublico ? fechaPublico.value : "";
-
     listaPublico.innerHTML = "";
 
     buscarHabitacionesPorCiudad(ciudad, fecha, function (lista) {
@@ -72,15 +66,15 @@ function buscarPublico(e) {
 
             var span = document.createElement("span");
             var texto = h.direccion + " - " + h.precio + "€";
-            if (h.tamano) {
-                texto += " - " + h.tamano + " m²";
-            }
+            if (h.tamano) texto += " - " + h.tamano + " m²";
             span.textContent = texto;
 
             div.appendChild(img);
             div.appendChild(span);
 
-            div.addEventListener("click", crearManejadorDetalle(h));
+            div.addEventListener("click", function () {
+                window.location.href = "login.html";
+            });
 
             listaPublico.appendChild(div);
         }
@@ -103,9 +97,7 @@ function buscarPrivado(e) {
         var i;
         for (i = 0; i < lista.length; i++) {
             var h = lista[i];
-            if (h.emailPropietario === usuario.email) {
-                continue;
-            }
+            if (h.emailPropietario === usuario.email) continue;
 
             var div = document.createElement("div");
             div.className = "itemHabitacion";
@@ -121,16 +113,13 @@ function buscarPrivado(e) {
 
             var span = document.createElement("span");
             var texto = h.direccion + " (" + h.latitud + ", " + h.longitud + ") - " + h.precio + "€";
-            if (h.tamano) {
-                texto += " - " + h.tamano + " m²";
-            }
+            if (h.tamano) texto += " - " + h.tamano + " m²";
             span.textContent = texto;
 
             div.appendChild(img);
             div.appendChild(span);
 
             div.addEventListener("click", crearManejadorDetalle(h));
-
             listaPrivado.appendChild(div);
         }
     });
@@ -149,10 +138,7 @@ function buscarGeo(e) {
     var lat = parseFloat(inputLatCentro.value);
     var lon = parseFloat(inputLonCentro.value);
     var radio = parseFloat(selectRadio.value);
-
-    if (isNaN(lat) || isNaN(lon) || isNaN(radio)) {
-        return;
-    }
+    if (isNaN(lat) || isNaN(lon) || isNaN(radio)) return;
 
     listaGeo.innerHTML = "";
 
@@ -173,9 +159,7 @@ function buscarGeo(e) {
                     var div = document.createElement("div");
                     div.className = "itemHabitacion";
                     var texto = h.direccion + " - " + h.precio + "€ (" + d.toFixed(2) + " km)";
-                    if (h.tamano) {
-                        texto += " - " + h.tamano + " m²";
-                    }
+                    if (h.tamano) texto += " - " + h.tamano + " m²";
                     div.textContent = texto;
                     div.addEventListener("click", crearManejadorDetalle(h));
                     listaGeo.appendChild(div);
@@ -215,11 +199,8 @@ function mostrarDetalleHabitacion(h) {
     var btnEditar = document.getElementById("btnEditarHabitacion");
 
     if (imgHab) {
-        if (h.foto && h.foto !== "") {
-            imgHab.src = h.foto;
-        } else {
-            imgHab.src = "img/habitacion_defecto.png";
-        }
+        if (h.foto && h.foto !== "") imgHab.src = h.foto;
+        else imgHab.src = "img/habitacion_defecto.png";
     }
     if (pDir) pDir.textContent = "Dirección: " + h.direccion;
     if (pCiudad) pCiudad.textContent = "Ciudad: " + h.ciudad;
@@ -242,9 +223,7 @@ function mostrarDetalleHabitacion(h) {
         var puedeEditar = false;
         if (usuarioJSON) {
             var usuario = JSON.parse(usuarioJSON);
-            if (usuario.email === h.emailPropietario) {
-                puedeEditar = true;
-            }
+            if (usuario.email === h.emailPropietario) puedeEditar = true;
         }
         if (puedeEditar && typeof prepararEdicionHabitacion === "function") {
             btnEditar.style.display = "inline-block";

@@ -1,7 +1,7 @@
 var bd;
 
 function iniciarBD() {
-    var peticion = indexedDB.open("vitobadixx", 1);
+    var peticion = indexedDB.open("vitobadi10", 1);
     peticion.addEventListener("upgradeneeded", crearBD);
     peticion.addEventListener("success", abrirOK);
     peticion.addEventListener("error", abrirError);
@@ -17,6 +17,9 @@ function crearBD(e) {
         storeUsuarios.add({ email: "igor@uni.es", password: "2222", nombre: "Igor", foto: "img/igor.png" });
         storeUsuarios.add({ email: "kevin@uni.es", password: "3333", nombre: "Kevin", foto: "img/kevin.png" });
         storeUsuarios.add({ email: "ainhoa@uni.es", password: "4444", nombre: "Ainhoa", foto: "img/ainhoa.png" });
+        storeUsuarios.add({ email: "laura@uni.es", password: "5555", nombre: "Laura", foto: "img/laura.png" });
+        storeUsuarios.add({ email: "mikel@uni.es", password: "6666", nombre: "Mikel", foto: "img/mikel.png" });
+        storeUsuarios.add({ email: "sara@uni.es", password: "7777", nombre: "Sara", foto: "img/sara.png" });
     }
 
     if (!almacenes.contains("habitacion")) {
@@ -27,6 +30,8 @@ function crearBD(e) {
         storeHab.add({ direccion: "Calle 4 Bilbao", ciudad: "Bilbao", precio: 350, latitud: 43.27, longitud: -2.92, emailPropietario: "ainhoa@uni.es", foto: "", tamano: 12, activa: true });
         storeHab.add({ direccion: "Calle 5 Donostia", ciudad: "Donostia", precio: 380, latitud: 43.31, longitud: -1.98, emailPropietario: "endika@uni.es", foto: "", tamano: 13, activa: true });
         storeHab.add({ direccion: "Calle 6 Donostia", ciudad: "Donostia", precio: 290, latitud: 43.32, longitud: -1.99, emailPropietario: "igor@uni.es", foto: "", tamano: 11, activa: true });
+        storeHab.add({ direccion: "Calle 7 Vitoria", ciudad: "Vitoria", precio: 260, latitud: 42.86, longitud: -2.69, emailPropietario: "laura@uni.es", foto: "", tamano: 10, activa: true });
+        storeHab.add({ direccion: "Calle 8 Bilbao", ciudad: "Bilbao", precio: 320, latitud: 43.25, longitud: -2.91, emailPropietario: "mikel@uni.es", foto: "", tamano: 11, activa: true });
     }
 
     if (!almacenes.contains("alquiler")) {
@@ -82,8 +87,6 @@ function buscarUsuarioPorEmail(email, callback) {
         callback(null);
     });
 }
-
-
 
 function buscarHabitacionesPorCiudad(ciudad, fechaISO, callback) {
     if (!bd) {
@@ -249,6 +252,86 @@ function obtenerSolicitudesPorPropietario(email, callback) {
         } else {
             callback(lista);
         }
+    });
+}
+
+function obtenerPerfilUsuario(email, callback) {
+    if (!bd) {
+        callback("inquilino");
+        return;
+    }
+    var txHab = bd.transaction(["habitacion"], "readonly");
+    var storeHab = txHab.objectStore("habitacion");
+    var cursorHab = storeHab.openCursor();
+    var tieneHab = false;
+    cursorHab.addEventListener("success", function (e) {
+        var cur = e.target.result;
+        if (cur) {
+            var h = cur.value;
+            if (h.emailPropietario === email) {
+                tieneHab = true;
+            }
+            cur.continue();
+        } else {
+            var txAlq = bd.transaction(["alquiler"], "readonly");
+            var storeAlq = txAlq.objectStore("alquiler");
+            var cursorAlq = storeAlq.openCursor();
+            var tieneAlq = false;
+            cursorAlq.addEventListener("success", function (e2) {
+                var c2 = e2.target.result;
+                if (c2) {
+                    var a = c2.value;
+                    if (a.emailInquilino === email) {
+                        tieneAlq = true;
+                    }
+                    c2.continue();
+                } else {
+                    var perfil;
+                    if (tieneHab && tieneAlq) perfil = "ambos";
+                    else if (tieneHab) perfil = "propietario";
+                    else perfil = "inquilino";
+                    callback(perfil);
+                }
+            });
+            cursorAlq.addEventListener("error", function () {
+                var perfil;
+                if (tieneHab) perfil = "propietario";
+                else perfil = "inquilino";
+                callback(perfil);
+            });
+        }
+    });
+    cursorHab.addEventListener("error", function () {
+        callback("inquilino");
+    });
+}
+
+function actualizarUsuario(email, datos, callback) {
+    if (!bd) {
+        if (callback) callback(false);
+        return;
+    }
+    var tx = bd.transaction(["usuario"], "readwrite");
+    var store = tx.objectStore("usuario");
+    var peticion = store.get(email);
+    peticion.addEventListener("success", function () {
+        var u = peticion.result;
+        if (!u) {
+            if (callback) callback(false);
+            return;
+        }
+        if (datos.nombre) u.nombre = datos.nombre;
+        if (datos.foto) u.foto = datos.foto;
+        var peticionUpdate = store.put(u);
+        peticionUpdate.addEventListener("success", function () {
+            if (callback) callback(true);
+        });
+        peticionUpdate.addEventListener("error", function () {
+            if (callback) callback(false);
+        });
+    });
+    peticion.addEventListener("error", function () {
+        if (callback) callback(false);
     });
 }
 
